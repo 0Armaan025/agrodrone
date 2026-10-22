@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    @apply bg-base text-ink min-h-screen font-sans selection:bg-accent selection:text-accent-ink;
+    overflow-x: hidden;
+  }
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-line rounded-3xl p-6 shadow-card;
+  }
+  .btn-primary {
+    @apply bg-accent text-accent-ink font-bold rounded-xl px-8 py-3 text-sm tracking-wide transition-all hover:bg-accent-2 active:scale-95 shadow-[0_0_20px_rgba(74,222,128,0.35)];
+  }
+  .btn-secondary {
+    @apply bg-surface-2 border border-line text-ink-2 rounded-xl px-8 py-3 text-sm tracking-wide transition-all hover:bg-accent/10 hover:border-accent;
+  }
+  .input-field {
+    @apply bg-surface-2 border border-line rounded-xl px-5 py-3 text-ink placeholder-ink-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all;
+  }
+  .chip {
+    @apply inline-flex items-center gap-2 bg-surface-2 border border-line rounded-full px-4 py-2 text-xs font-medium text-ink-2 transition-all hover:border-accent hover:text-accent cursor-pointer;
+  }
+  .chip.active {
+    @apply border-accent text-accent bg-accent/10;
+  }
+  .glass-panel {
+    @apply bg-surface/80 backdrop-blur-md border border-line/50;
+  }
+}
+
+html[data-theme="light"] {
+  --bg-base: #f7f6f0;
+  --surface: #f7f6f0;
+  --surface-2: #ffffff;
+  --line: #e5e5e5;
+  --ink: #1a271a;
+  --ink-2: #3a3a3a;
+  --ink-3: #666666;
+  --accent: #4ade80;
+  --accent-ink: #000000;
+  --accent-2: #22c55e;
+}
+
+html[data-theme="light"] .bg-base { background-color: #f7f6f0 !important; }
+html[data-theme="light"] .text-ink { color: #1a271a !important; }
+html[data-theme="light"] .bg-surface { background-color: #f7f6f0 !important; }
+html[data-theme="light"] .border-line { border-color: #e5e5e5 !important; }
+html[data-theme="light"] .bg-surface-2 { background-color: #ffffff !important; }
+html[data-theme="light"] .text-ink-3 { color: #666666 !important; }
+html[data-theme="light"] .text-ink-2 { color: #3a3a3a !important; }
+html[data-theme="light"] .text-accent-ink { color: #000000 !important; }
+html[data-theme="light"] .bg-accent { background-color: #4ade80 !important; }
+html[data-theme="light"] .bg-accent\/10 { background-color: rgba(74, 222, 128, 0.1) !important; }
+html[data-theme="light"] .bg-accent\/20 { background-color: rgba(74, 222, 128, 0.2) !important; }
+html[data-theme="light"] .border-accent { border-color: #4ade80 !important; }
+html[data-theme="light"] .shadow-card { box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1) !important; }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f7f6f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
