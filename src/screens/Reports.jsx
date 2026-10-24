@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BarChart3, FileText, MessageCircle, Clock, AlertCircle, CheckCircle } from 'lucide-react'
+import { useToast } from '../components/useToast'
 
 const reports = [
   { id: 1, title: 'Field Alpha Coverage Report', date: '21/10/2026', type: 'Mission', status: 'Completed', value: '44% coverage · 19.7 ha', icon: CheckCircle },
@@ -18,6 +19,7 @@ const messages = [
 ]
 
 export default function Reports() {
+  const { add: addToast } = useToast()
   const [activeTab, setActiveTab] = useState('reports')
   const [exporting, setExporting] = useState(null)
 
@@ -89,7 +91,7 @@ export default function Reports() {
                     setExporting(label)
                     setTimeout(() => {
                       setExporting(null)
-                      alert('Export started: ' + label + '\n\nExporting data... (demo mode)')
+                      addToast({ title: 'Export Started', message: label + ' (demo mode)', type: 'success' })
                     }, 800)
                   }}
                   className={`w-full py-3 rounded-xl border border-line text-left flex items-center justify-between text-ink-3 hover:bg-surface-2 transition-all ${exporting === label ? 'bg-accent/20 border-accent text-accent-ink' : ''}`}

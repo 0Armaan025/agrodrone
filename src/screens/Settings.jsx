@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
-import { Shield, User, Palette, Bell, Globe, Key, Monitor, Database } from 'lucide-react'
+import { Shield, User, Palette, Bell, Globe, Key, Monitor, Database, MapPin, Sparkles } from 'lucide-react'
 
 export default function SettingsScreen() {
   const [theme, setTheme] = useState('dark')
   const [notifications, setNotifications] = useState(true)
   const [emailAlerts, setEmailAlerts] = useState(true)
   const [autoLaunch, setAutoLaunch] = useState(false)
+  const [geminiKey, setGeminiKey] = useState('')
+  const [mapsKey, setMapsKey] = useState('')
+  const [cartoKey, setCartoKey] = useState('')
+  const [keySaved, setKeySaved] = useState(false)
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-ink tracking-tight">Settings</h2>
-        <p className="text-ink-3">Configure your AgroDrone mission control preferences.</p>
+      <div className="page-header">
+        <h2 className="section-title">Settings</h2>
+        <p className="section-subtitle">Configure your AgroDrone mission control preferences.</p>
       </div>
 
-      <section className="card">
+      <section className="card animate-in delay-100">
         <h3 className="font-bold text-lg text-ink mb-4">Appearance</h3>
         <div className="space-y-4">
           <div className="p-4 rounded-2xl border border-line bg-surface-2">
@@ -31,7 +35,7 @@ export default function SettingsScreen() {
         </div>
       </section>
 
-      <section className="card">
+      <section className="card animate-in delay-200">
         <h3 className="font-bold text-lg text-ink mb-4">Notifications</h3>
         <div className="space-y-4">
           <ToggleRow label="Push Notifications" desc="Receive real-time mission updates on this device" checked={notifications} onChange={() => setNotifications(!notifications)} />
@@ -40,7 +44,46 @@ export default function SettingsScreen() {
         </div>
       </section>
 
-      <section className="card">
+      <section className="card animate-in delay-300">
+        <h3 className="font-bold text-lg text-ink mb-4">API Keys</h3>
+        <div className="space-y-4">
+          <div className="p-4 rounded-2xl border border-line bg-surface-2">
+            <div className="flex items-center gap-2 mb-1">
+              <Sparkles className="w-4 h-4 text-accent" />
+              <span className="font-medium text-ink">Gemini API Key</span>
+            </div>
+            <p className="text-[10px] text-ink-3 mb-2">Used for video AI analysis. Get a free key from Google AI Studio.</p>
+            <div className="flex gap-2">
+              <input type="password" placeholder="gsk_..." value={geminiKey} onChange={(e) => setGeminiKey(e.target.value)} className="flex-1 input-field text-xs" />
+              <button onClick={() => { if (geminiKey.trim()) { setKeySaved(true); setTimeout(() => setKeySaved(false), 2000); } }} className={`px-3 py-2 rounded-xl border text-xs font-bold transition-all ${keySaved ? 'bg-accent text-accent-ink border-accent' : 'bg-surface-2 border-line text-ink-2 hover:text-ink hover:border-accent'}`}>{keySaved ? 'Saved!' : 'Save'}</button>
+            </div>
+          </div>
+          <div className="p-4 rounded-2xl border border-line bg-surface-2">
+            <div className="flex items-center gap-2 mb-1">
+              <MapPin className="w-4 h-4 text-accent" />
+              <span className="font-medium text-ink">Google Maps API Key</span>
+            </div>
+            <p className="text-[10px] text-ink-3 mb-2">Used for field mapping, route planning, and geolocation features.</p>
+            <div className="flex gap-2">
+              <input type="password" placeholder="AIza..." value={mapsKey} onChange={(e) => setMapsKey(e.target.value)} className="flex-1 input-field text-xs" />
+              <button onClick={() => { if (mapsKey.trim()) { setKeySaved(true); setTimeout(() => setKeySaved(false), 2000); } }} className={`px-3 py-2 rounded-xl border text-xs font-bold transition-all ${keySaved ? 'bg-accent text-accent-ink border-accent' : 'bg-surface-2 border-line text-ink-2 hover:text-ink hover:border-accent'}`}>{keySaved ? 'Saved!' : 'Save'}</button>
+            </div>
+          </div>
+          <div className="p-4 rounded-2xl border border-line bg-surface-2">
+            <div className="flex items-center gap-2 mb-1">
+              <Globe className="w-4 h-4 text-accent" />
+              <span className="font-medium text-ink">Carto API Key</span>
+            </div>
+            <p className="text-[10px] text-ink-3 mb-2">Used for map tiles and basemap rendering in Field Map Planner.</p>
+            <div className="flex gap-2">
+              <input type="password" placeholder="carto_key..." value={cartoKey} onChange={(e) => setCartoKey(e.target.value)} className="flex-1 input-field text-xs" />
+              <button onClick={() => { if (cartoKey.trim()) { setKeySaved(true); setTimeout(() => setKeySaved(false), 2000); } }} className={`px-3 py-2 rounded-xl border text-xs font-bold transition-all ${keySaved ? 'bg-accent text-accent-ink border-accent' : 'bg-surface-2 border-line text-ink-2 hover:text-ink hover:border-accent'}`}>{keySaved ? 'Saved!' : 'Save'}</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="card animate-in delay-400">
         <h3 className="font-bold text-lg text-ink mb-4">Account</h3>
         <div className="space-y-4">
           <div className="p-4 rounded-2xl border border-line bg-surface-2">
@@ -59,7 +102,7 @@ export default function SettingsScreen() {
         </div>
       </section>
 
-      <section className="card">
+      <section className="card animate-in delay-500">
         <h3 className="font-bold text-lg text-ink mb-4">Data & Export</h3>
         <div className="space-y-3">
           {['Export Mission Data (CSV)', 'Clear Cache', 'Reset to Defaults'].map((label) => (

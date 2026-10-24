@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Monitor, Activity, BatteryCharging, AlertTriangle, Wifi, Cloud } from 'lucide-react'
 
 const drones = [
@@ -32,8 +33,8 @@ export default function FleetHealth() {
       <div className="card">
         <h3 className="font-bold text-lg text-ink mb-4">Drone Inventory</h3>
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
+          <table className="w-full text-left border-collapse min-w-full">
+            <thead className="sticky top-0 bg-base/50">
               <tr className="border-b border-line text-left">
                 <th className="pb-3 text-xs font-bold text-ink-2 uppercase">Drone</th>
                 <th className="pb-3 text-xs font-bold text-ink-2 uppercase">Status</th>
@@ -46,7 +47,11 @@ export default function FleetHealth() {
             </thead>
             <tbody>
               {drones.map((d) => (
-                <tr key={d.id} className="border-b border-line/50 hover:bg-surface-2/50 transition-colors">
+                <motion.tr
+                  key={d.id}
+                  whileHover={{ bgColor: '#f0fdf4' }}
+                  className="border-b border-line/50 hover:bg-surface-2/50 transition-colors"
+                >
                   <td className="py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-surface flex items-center justify-center">
@@ -81,7 +86,7 @@ export default function FleetHealth() {
                   <td className="py-4 text-right">
                     <button className="p-2 text-ink-3 hover:text-accent transition-colors" title="Details"><Monitor className="w-4 h-4" /></button>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </table>
@@ -92,7 +97,12 @@ export default function FleetHealth() {
         <h3 className="font-bold text-lg text-ink mb-4">Battery Levels Across Fleet</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {drones.map((d) => (
-            <div key={d.id} className="p-4 rounded-2xl border border-line bg-surface-2">
+            <motion.div
+              key={d.id}
+              whileHover={{ y: -4 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="p-4 rounded-2xl border border-line bg-surface-2"
+            >
               <div className="flex items-center justify-between mb-3">
                 <span className="font-medium text-ink">{d.name}</span>
                 <span className="text-xs font-mono font-bold text-accent">{d.battery}%</span>
@@ -104,7 +114,7 @@ export default function FleetHealth() {
                 <span>{d.health}</span>
                 <span>{d.status}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -114,7 +124,11 @@ export default function FleetHealth() {
 
 function MiniStat({ label, value, sub, icon: Icon }) {
   return (
-    <div className="card p-4">
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      className="card p-4"
+    >
       <div className="flex items-center justify-between mb-2">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-surface-2 border border-line">
           <Icon className="w-4 h-4 text-accent" />
@@ -123,6 +137,6 @@ function MiniStat({ label, value, sub, icon: Icon }) {
       </div>
       <div className="text-2xl font-bold font-mono text-ink">{value}</div>
       <p className="text-xs text-ink-3 mt-1">{sub}</p>
-    </div>
+    </motion.div>
   )
 }

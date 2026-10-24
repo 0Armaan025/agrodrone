@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { ArrowRight, ArrowLeft, CheckCircle, MapPin, Compass, Monitor, Crop, Monitor as DroneIcon, Clock } from 'lucide-react'
+import { ArrowRight, ArrowLeft, CheckCircle, MapPin, Compass, Monitor, Crop, Scissors, Monitor as DroneIcon, Clock } from 'lucide-react'
+import { useToast } from '../components/useToast'
 
 const STEPS = [
   { key: 'field', label: 'Field', icon: MapPin },
@@ -9,6 +10,7 @@ const STEPS = [
 ]
 
 export default function ConfigureWizard() {
+  const { add: addToast } = useToast()
   const [step, setStep] = useState('field')
   const [field, setField] = useState('Field Alpha — North Block (45 ha)')
   const [pattern, setPattern] = useState('Grid')
@@ -69,7 +71,7 @@ export default function ConfigureWizard() {
           {step !== 'launch' ? (
             <button onClick={() => setStep(STEPS[stepIndex + 1].key)} className="btn-primary flex-1 md:flex-none">Continue <ArrowRight className="w-4 h-4 ml-2" /></button>
           ) : (
-            <button onClick={() => alert('Mission launched! Demo mode — drone command saved.')} className="btn-primary flex-1 md:flex-none">Launch Mission</button>
+            <button onClick={() => { addToast({ title: 'Mission Launched', message: 'Demo mode — drone command saved.', type: 'success' }); }} className="btn-primary flex-1 md:flex-none">Launch Mission</button>
           )}
         </div>
       </div>
@@ -227,7 +229,7 @@ function MissionSummary({ step, field, pattern, altitude, overlap, speed, drone,
               {['Pesticide Mix A', 'Fungicide B-22', 'Herbicide Clear'].map((c) => (<button key={c} className="chip px-4">{c}</button>))}
             </div>
           </div>
-          <button onClick={() => alert('Mission launched! Demo mode — drone mission command saved.')} className="btn-primary w-full py-4 text-lg">Launch Mission</button>
+          <button onClick={() => { addToast({ title: 'Mission Launched', message: 'Demo mode — drone mission command saved.', type: 'success' }); }} className="btn-primary w-full py-4 text-lg">Launch Mission</button>
         </>
       )}
     </div>
